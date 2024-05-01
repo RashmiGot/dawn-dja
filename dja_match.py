@@ -11,6 +11,8 @@ from grizli import utils
 from grizli.aws import db # grizli.aws for SQL queries
 import eazy
 
+import warnings
+warnings.filterwarnings('ignore')
 
 
 # --------------------------------------------------------------
