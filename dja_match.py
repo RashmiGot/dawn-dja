@@ -34,6 +34,7 @@ def spec_tab_from_db():
     spec_tab = db.SQL("""
                 SELECT ne.root, ne.file, ne.ra, ne.dec
                 FROM nirspec_extractions ne
+                WHERE ne.ra > 0.0.001
                 """)
     return(spec_tab)
 
@@ -62,6 +63,7 @@ def unmatched_spec_from_db():
                 WHERE ne.file NOT IN (SELECT DISTINCT nrp.file_spec
                                         FROM nirspec_phot_match nrp
                                         )
+                AND ne.ra > 0.001
                 """)
     return(spec_tab)
 
@@ -116,7 +118,7 @@ path_to_outfile='cats/'
 
     Returns
     -------
-    empty
+    marriedcat_concat : joined catalog, format=astropy Table
     """
 
     photcat_list = np.unique(photcat_concat['file_phot'])
@@ -149,9 +151,10 @@ path_to_outfile='cats/'
         elif i>0:
             marriedcat_concat = vstack([marriedcat_concat,married_tab])
 
-    marriedcat_concat.write(path_to_outfile+outfile_name+'.fits', format='fits', overwrite=True)
+    if outfile_name is not None:
+        marriedcat_concat.write(path_to_outfile+outfile_name+'.fits', format='fits', overwrite=True)
 
-    return()
+    return(marriedcat_concat)
 
 
     
@@ -178,7 +181,7 @@ path_to_outfile='cats/'
 
     Returns
     -------
-    empty
+    photcat_concat : concatenated photometry table
     """
 
     for i in range(len(photcat_list)):
@@ -198,9 +201,10 @@ path_to_outfile='cats/'
         elif i>0:
             photcat_concat = vstack([photcat_concat,photcat_sub])
     
-    photcat_concat.write(path_to_outfile+outfile_name+'.fits',format='fits', overwrite=True)
+    if outfile_name is not None:
+        photcat_concat.write(path_to_outfile+outfile_name+'.fits',format='fits', overwrite=True)
 
-    return()
+    return(photcat_concat)
 
 
 # --------------------------------------------------------------
@@ -226,7 +230,7 @@ path_to_outfile='cats/'
     
     Returns
     -------
-    empty    
+    phot_zout_match_concat : matched table, format=astropy Table    
     """
 
     for i in range(len(photcat_list)):
@@ -282,7 +286,8 @@ path_to_outfile='cats/'
         else:
             print('Check index in for loop!')
 
-    phot_zout_match_concat.write(path_to_outfile+outfile_name+'.fits', format='fits', overwrite=True)
+    if outfile_name is not None:
+        phot_zout_match_concat.write(path_to_outfile+outfile_name+'.fits', format='fits', overwrite=True)
     
-    return()
+    return(phot_zout_match_concat)
 
