@@ -1,2 +1,3 @@
-# dawn-dja
-Repository to store code related to the DAWN JWST Archive (DJA; https://dawn-cph.github.io/dja/)
+# dawn-dja-match
+
+Code that finds matches between the spectroscopy and photometry stored on the Dawn JWST Archive (DJA; https://dawn-cph.github.io/dja/)
