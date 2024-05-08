@@ -34,7 +34,7 @@ def spec_tab_from_db():
     spec_tab = db.SQL("""
                 SELECT ne.root, ne.file, ne.ra, ne.dec
                 FROM nirspec_extractions ne
-                WHERE ne.ra > 0.0.001
+                WHERE ne.ra > 0.001
                 """)
     return(spec_tab)
 
